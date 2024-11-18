@@ -1,6 +1,6 @@
-import '../styling/pages/Join.css';
+import '../styling/components/Form.css';
 
-const Join = () => {
+const Form = () => {
   return (
     <form action="">
       <h2>Login</h2>
@@ -17,4 +17,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default Form;
