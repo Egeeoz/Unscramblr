@@ -19,9 +19,9 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1731927852689-2024-11-18T11:04:12.689Z/userSignUp.zip"
+          "S3Key": "serverless/mixy/dev/1731932501210-2024-11-18T12:21:41.210Z/userSignUp.zip"
         },
-        "Handler": "backend/functions/userSignUp/index.handler",
+        "Handler": "src/backend/functions/userSignup/index.handler",
         "Runtime": "nodejs20.x",
         "FunctionName": "mixy-dev-userSignUp",
         "MemorySize": 1024,
@@ -37,9 +37,9 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1731927852689-2024-11-18T11:04:12.689Z/userLogin.zip"
+          "S3Key": "serverless/mixy/dev/1731932501210-2024-11-18T12:21:41.210Z/userLogin.zip"
         },
-        "Handler": "backend/functions/userLogin/index.handler",
+        "Handler": "src/backend/functions/userLogin/index.handler",
         "Runtime": "nodejs20.x",
         "FunctionName": "mixy-dev-userLogin",
         "MemorySize": 1024,
@@ -50,24 +50,24 @@
         "UserLoginLogGroup"
       ]
     },
-    "UserSignUpLambdaVersioneuoWRY4WjZ85CqWE5l3J4qLuhucpyf9S2Zg660Eh7g": {
+    "UserSignUpLambdaVersionZDvP3ZhJYNLGZupDsMZ3Pc0aT2uajcXTCW4LcNs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserSignUpLambdaFunction"
         },
-        "CodeSha256": "c0HeqLGgp+ARuiBVlqYLVvz9ECcTKfOu3XfuFVDt+Jc="
+        "CodeSha256": "sydQdk6fthdFmH+//EFDuuaWxbayvUVsq3fsR2+VoYY="
       }
     },
-    "UserLoginLambdaVersionYxjxO9D4teM3npSEcps1uYoaiawL9jBqkeqoyU36Q0": {
+    "UserLoginLambdaVersion7xNukNth6dGQqc1Pw3vKwBSQHeUeuHmSf5l94ARYs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserLoginLambdaFunction"
         },
-        "CodeSha256": "c0HeqLGgp+ARuiBVlqYLVvz9ECcTKfOu3XfuFVDt+Jc="
+        "CodeSha256": "sydQdk6fthdFmH+//EFDuuaWxbayvUVsq3fsR2+VoYY="
       }
     },
     "HttpApi": {
@@ -285,7 +285,7 @@
     "UserSignUpLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserSignUpLambdaVersioneuoWRY4WjZ85CqWE5l3J4qLuhucpyf9S2Zg660Eh7g"
+        "Ref": "UserSignUpLambdaVersionZDvP3ZhJYNLGZupDsMZ3Pc0aT2uajcXTCW4LcNs"
       },
       "Export": {
         "Name": "sls-mixy-dev-UserSignUpLambdaFunctionQualifiedArn"
@@ -294,7 +294,7 @@
     "UserLoginLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserLoginLambdaVersionYxjxO9D4teM3npSEcps1uYoaiawL9jBqkeqoyU36Q0"
+        "Ref": "UserLoginLambdaVersion7xNukNth6dGQqc1Pw3vKwBSQHeUeuHmSf5l94ARYs"
       },
       "Export": {
         "Name": "sls-mixy-dev-UserLoginLambdaFunctionQualifiedArn"
