@@ -1,12 +1,17 @@
 import '../styling/components/Navbar.css';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
     <nav>
-      <h1>Mixxy</h1>
+      <Link to={'/'}>
+        <h1>Mixxy</h1>
+      </Link>
       <header>
         <h2>Username</h2>
-        <button className="login-button">Log in</button>
+        <Link to={'/join'}>
+          <button className="login-button">Log in</button>
+        </Link>
       </header>
     </nav>
   );
