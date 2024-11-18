@@ -1,0 +1,54 @@
+org: egestudent
+
+service: mixy
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  iam:
+    role: arn:aws:iam::586794471369:role/serverless
+  httpApi:
+    cors:
+      allowedOrigins:
+        - '*'
+      allowedHeaders:
+        - Content-Type
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+functions:
+  userSignUp:
+    handler: backend/functions/userSignUp/index.handler
+    events:
+      - httpApi:
+          path: /signup
+          method: post
+  userLogin:
+    handler: backend/functions/userLogin/index.handler
+    events:
+      - httpApi:
+          path: /login
+          method: post
+
+resources:
+  Resources:
+    Users:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Users
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
