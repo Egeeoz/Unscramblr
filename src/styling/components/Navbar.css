@@ -6,14 +6,20 @@ nav {
 }
 
 nav header {
-  width: 28vw;
+  min-width: 18vw;
+  width: auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-right: 7rem;
   align-items: center;
   border-right: 2px solid white;
   border-left: 2px solid white;
   padding: 0 1rem;
+}
+
+header a {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 nav h1 {

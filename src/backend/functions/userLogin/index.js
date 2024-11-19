@@ -35,7 +35,7 @@ export const handler = async (event) => {
       return sendError(401, 'Invalid password');
     }
 
-    return sendResponse('Successfully logged in');
+    return sendResponse(user);
   } catch (error) {
     console.error(error);
     return sendError(500, 'Internal server error');

@@ -19,7 +19,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1731935274292-2024-11-18T13:07:54.292Z/userSignUp.zip"
+          "S3Key": "serverless/mixy/dev/1732034175039-2024-11-19T16:36:15.039Z/userSignUp.zip"
         },
         "Handler": "src/backend/functions/userSignup/index.handler",
         "Runtime": "nodejs20.x",
@@ -37,7 +37,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1731935274292-2024-11-18T13:07:54.292Z/userLogin.zip"
+          "S3Key": "serverless/mixy/dev/1732034175039-2024-11-19T16:36:15.039Z/userLogin.zip"
         },
         "Handler": "src/backend/functions/userLogin/index.handler",
         "Runtime": "nodejs20.x",
@@ -50,24 +50,24 @@
         "UserLoginLogGroup"
       ]
     },
-    "UserSignUpLambdaVersionfSxFksByb8qE3eCiwvhNjwRD71ArKD5mNsyAC17Q": {
+    "UserSignUpLambdaVersionRDL4huJyJLnA2Hxw5huwyJDSQ68TLx2uXF4KNobpac": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserSignUpLambdaFunction"
         },
-        "CodeSha256": "B8Tcx9H7m/0zCyI5257XTWg0RzZ04NGuw9LFzG9Y1/E="
+        "CodeSha256": "9O2AxXsIKN54EXPAruq9NUGVPL1kOS+3grF9gcEYqYs="
       }
     },
-    "UserLoginLambdaVersioneWbrZsi85thgVmbik2OucfY1zUs0qSlzh0WSnNAKkE": {
+    "UserLoginLambdaVersiontpTtEAh9E2oDinnwLbccAFtzji9XcIoJoSUQQaHxE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserLoginLambdaFunction"
         },
-        "CodeSha256": "B8Tcx9H7m/0zCyI5257XTWg0RzZ04NGuw9LFzG9Y1/E="
+        "CodeSha256": "9O2AxXsIKN54EXPAruq9NUGVPL1kOS+3grF9gcEYqYs="
       }
     },
     "HttpApi": {
@@ -285,7 +285,7 @@
     "UserSignUpLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserSignUpLambdaVersionfSxFksByb8qE3eCiwvhNjwRD71ArKD5mNsyAC17Q"
+        "Ref": "UserSignUpLambdaVersionRDL4huJyJLnA2Hxw5huwyJDSQ68TLx2uXF4KNobpac"
       },
       "Export": {
         "Name": "sls-mixy-dev-UserSignUpLambdaFunctionQualifiedArn"
@@ -294,7 +294,7 @@
     "UserLoginLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserLoginLambdaVersioneWbrZsi85thgVmbik2OucfY1zUs0qSlzh0WSnNAKkE"
+        "Ref": "UserLoginLambdaVersiontpTtEAh9E2oDinnwLbccAFtzji9XcIoJoSUQQaHxE"
       },
       "Export": {
         "Name": "sls-mixy-dev-UserLoginLambdaFunctionQualifiedArn"
