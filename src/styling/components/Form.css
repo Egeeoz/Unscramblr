@@ -1,7 +1,7 @@
 form {
   margin: 0 auto;
-  width: 30%;
-  height: 40vh;
+  width: 25%;
+  height: 46vh;
   border: 1px solid white;
   display: flex;
   flex-direction: column;
@@ -10,14 +10,29 @@ form {
 }
 
 .form-content {
-  width: 60%;
+  width: 80%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.3rem;
   font-size: 20px;
   margin-bottom: 1rem;
 }
 
-.submit {
+.form-content input {
+  height: 4.5vh;
+  border-radius: 20px;
+  border: none;
+  padding: 1rem;
+  margin-bottom: 1rem;
   color: black;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.form-content button {
+  margin: 0 auto;
+}
+
+form h2 {
+  font-size: 32px;
 }

@@ -1,4 +1,5 @@
 import '../styling/components/Form.css';
+import Button from './Button';
 
 interface FormProps {
   header: 'Signup' | 'Login';
@@ -19,11 +20,7 @@ const Form = ({ header }: FormProps) => {
         <input type="text" id="email" placeholder="Enter Email" />
         <label htmlFor="password">Password</label>
         <input type="text" id="password" placeholder="Enter Password" />
-        <input
-          type="submit"
-          value={header === 'Signup' ? 'Sign Up' : 'Login'}
-          className="submit"
-        />
+        <Button text={header === 'Signup' ? 'Signup' : 'Login'} />
       </section>
     </form>
   );
