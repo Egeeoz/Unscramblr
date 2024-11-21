@@ -10,6 +10,11 @@ const Word = () => {
     return storedRandomWord || '';
   });
 
+  const [scrambledWord, setScrambledWord] = useState<string>(() => {
+    const storedScrambledWord = localStorage.getItem('scrambledWord');
+    return storedScrambledWord || '';
+  });
+
   useEffect(() => {
     if (words.length > 0) return;
 
@@ -39,11 +44,23 @@ const Word = () => {
     const randomPickedWord = words[randomIndex];
     setRandomWord(randomPickedWord);
     localStorage.setItem('randomWord', randomPickedWord);
+
+    scrambleWord(randomPickedWord);
+  };
+
+  const scrambleWord = (word: string) => {
+    const chars = word.split('');
+    const currentScrambledWord = chars
+      .sort(() => 0.5 - Math.random())
+      .join('')
+      .toLocaleLowerCase();
+    setScrambledWord(currentScrambledWord);
+    localStorage.setItem('scrambledWord', currentScrambledWord);
   };
 
   return (
     <section>
-      <p>{randomWord || 'Click to get random word'}</p>
+      <p>{scrambledWord || 'Click to get random word'}</p>
       <button onClick={pickRandomWord}>Get random word</button>
     </section>
   );
