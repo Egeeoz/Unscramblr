@@ -21,6 +21,8 @@ const Word = () => {
     return storedGuess ? JSON.parse(storedGuess) : [];
   });
 
+  const [gameStatus, setGameStatus] = useState<boolean>(true);
+
   useEffect(() => {
     if (words.length > 0) return;
 
@@ -46,6 +48,8 @@ const Word = () => {
   }, [words.length]);
 
   const pickRandomWord = () => {
+    setGameStatus(true);
+    setGuesses([]);
     const randomIndex = Math.floor(Math.random() * words.length);
     const randomPickedWord = words[randomIndex];
     setRandomWord(randomPickedWord);
@@ -65,15 +69,43 @@ const Word = () => {
   };
 
   const handleGuess = () => {
-    const input = document.querySelector('.guess-input') as HTMLInputElement;
-    const value = input.value;
-    if (value != '') {
-      const updatedGuesses = [...guesses, value];
-      setGuesses(updatedGuesses);
-      localStorage.setItem('guessedWords', JSON.stringify(updatedGuesses));
+    if (gameStatus) {
+      const input = document.querySelector('.guess-input') as HTMLInputElement;
+      const value = input.value;
+      if (value != '') {
+        if (guesses.length >= 5) {
+          alert('Sorry, You have lost');
+          setGameStatus(false);
+          return;
+        }
 
-      input.value = '';
-      console.log(updatedGuesses);
+        handleGameStatus(value, randomWord);
+
+        const updatedGuesses = [...guesses, value];
+        setGuesses(updatedGuesses);
+        localStorage.setItem('guessedWords', JSON.stringify(updatedGuesses));
+
+        input.value = '';
+        console.log(updatedGuesses);
+      }
+    }
+  };
+
+  const handleGameStatus = (word: string, correctWord: string) => {
+    const normalizedWord = word.toLowerCase();
+    const normalizedCorrectWord = correctWord.toLowerCase();
+
+    if (normalizedWord == normalizedCorrectWord) {
+      alert('You guessed right! Congratulations!');
+      setGameStatus(false);
+      setScrambledWord(normalizedCorrectWord);
+    } else if (guesses.length === 4) {
+      alert(
+        'You have used all your guesses. The correct word was: ' +
+          normalizedCorrectWord
+      );
+      setScrambledWord(normalizedCorrectWord);
+      setGameStatus(false);
     }
   };
 
