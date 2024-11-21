@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import '../styling/components/Word.css';
 
 const Word = () => {
   const [words, setWords] = useState<string[]>(() => {
@@ -59,10 +60,14 @@ const Word = () => {
   };
 
   return (
-    <section>
-      <p>{scrambledWord || 'Click to get random word'}</p>
-      <button onClick={pickRandomWord}>Get random word</button>
-    </section>
+    <>
+      <p className="scrambled-word">
+        {scrambledWord || 'Click to get random word'}
+      </p>
+      <button className="word-button" onClick={pickRandomWord}>
+        Get a Scrambled word
+      </button>
+    </>
   );
 };
 

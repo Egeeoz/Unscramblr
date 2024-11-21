@@ -1,0 +1,11 @@
+.word-button {
+  color: black;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  font-weight: bold;
+  width: 20vw;
+}
+
+.scrambled-word {
+  font-size: 40px;
+}
