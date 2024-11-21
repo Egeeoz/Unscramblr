@@ -1,3 +1,10 @@
+.scrambled-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .word-button {
   color: black;
   padding: 0.5rem 1rem;
@@ -8,4 +15,35 @@
 
 .scrambled-word {
   font-size: 40px;
+}
+
+.guess-input-section {
+  width: 100%;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.guess-input {
+  width: 100%;
+  color: black;
+  font-size: 24px;
+  height: 5vh;
+}
+
+.guess-button {
+  color: black;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  font-weight: bold;
+  width: 20vw;
+  height: 5vh;
+}
+
+.guesses-section {
+  height: 14vh;
+  width: 100%;
+  border: 1px solid white;
 }

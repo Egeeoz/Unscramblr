@@ -16,6 +16,11 @@ const Word = () => {
     return storedScrambledWord || '';
   });
 
+  const [guesses, setGuesses] = useState<string[]>(() => {
+    const storedGuess = localStorage.getItem('guessedWords');
+    return storedGuess ? JSON.parse(storedGuess) : [];
+  });
+
   useEffect(() => {
     if (words.length > 0) return;
 
@@ -59,14 +64,43 @@ const Word = () => {
     localStorage.setItem('scrambledWord', currentScrambledWord);
   };
 
+  const handleGuess = () => {
+    const input = document.querySelector('.guess-input') as HTMLInputElement;
+    const value = input.value;
+    if (value != '') {
+      const updatedGuesses = [...guesses, value];
+      setGuesses(updatedGuesses);
+      localStorage.setItem('guessedWords', JSON.stringify(updatedGuesses));
+
+      input.value = '';
+      console.log(updatedGuesses);
+    }
+  };
+
   return (
     <>
-      <p className="scrambled-word">
-        {scrambledWord || 'Click to get random word'}
-      </p>
-      <button className="word-button" onClick={pickRandomWord}>
-        Get a Scrambled word
-      </button>
+      <section className="scrambled-container">
+        <p className="scrambled-word">
+          {scrambledWord || 'Click to get random word'}
+        </p>
+        <button className="word-button" onClick={pickRandomWord}>
+          Get a Scrambled word
+        </button>
+      </section>
+      <section className="guess-input-section">
+        <input type="text" className="guess-input" />
+        <button className="guess-button" onClick={handleGuess}>
+          Guess
+        </button>
+      </section>
+      <section className="guesses-section">
+        <h3>Guesses</h3>
+        <ul>
+          {guesses.map((guess, index) => (
+            <li key={index}>{guess}</li>
+          ))}
+        </ul>
+      </section>
     </>
   );
 };
