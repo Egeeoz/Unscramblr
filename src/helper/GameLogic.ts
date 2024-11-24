@@ -13,19 +13,21 @@ export const scrambleWord = (word: string): string => {
     .toLocaleLowerCase();
 };
 
-export const getDailyWord = (words: string[]): string => {
+export const getDailyWord = (
+  words: string[]
+): { word: string; gameStatus: boolean } => {
   const today = new Date().toISOString().split('T')[0];
   const storedDate = localStorage.getItem('dailyWordDate');
   const storedWord = localStorage.getItem('dailyWord');
 
   if (storedDate === today && storedWord) {
-    return localStorage.getItem('dailyWord') || '';
+    return { word: storedWord, gameStatus: false };
   }
 
   const dailyWord = pickRandomWord(words);
   localStorage.setItem('dailyWord', dailyWord);
   localStorage.setItem('dailyWordDate', today);
-  return dailyWord;
+  return { word: dailyWord, gameStatus: true };
 };
 
 export const validateGuess = (guess: string, correctWord: string): boolean => {

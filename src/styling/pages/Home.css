@@ -8,7 +8,7 @@
 
 .word-container {
   display: flex;
-  height: 40vh;
+  height: 43vh;
   width: 50%;
   flex-direction: column;
   align-items: center;

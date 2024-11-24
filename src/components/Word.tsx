@@ -24,7 +24,7 @@ const Word = () => {
     const storedGuesses = localStorage.getItem('guessedWords');
     return storedGuesses ? JSON.parse(storedGuesses) : [];
   });
-  const [gameStatus, setGameStatus] = useState<boolean>(true);
+  const [gameStatus, setGameStatus] = useState<boolean>(false);
 
   useEffect(() => {
     if (words.length > 0) return;
@@ -53,12 +53,15 @@ const Word = () => {
   useEffect(() => {
     if (words.length === 0 || randomWord) return;
 
-    const dailyWord = getDailyWord(words);
-    setRandomWord(dailyWord);
-    const scrambled = scrambleWord(dailyWord);
+    const { word, gameStatus: newGameStatus } = getDailyWord(words);
+
+    setGameStatus(newGameStatus);
+
+    setRandomWord(word);
+    const scrambled = scrambleWord(word);
     setScrambledWord(scrambled);
 
-    localStorage.setItem('dailyWord', dailyWord);
+    localStorage.setItem('dailyWord', word);
     localStorage.setItem('scrambledWord', scrambled);
   }, [words]);
 
@@ -79,12 +82,15 @@ const Word = () => {
     if (isCorrect) {
       alert('You guessed right! Congratulations!');
       setGameStatus(false);
+      setScrambledWord(randomWord);
+      localStorage.setItem('scrambledWord', randomWord);
     } else if (guesses.length === 4) {
       alert(
         `You have used all your guesses. The correct word was: ${randomWord}`
       );
-      setScrambledWord(randomWord);
       setGameStatus(false);
+      setScrambledWord(randomWord);
+      localStorage.setItem('scrambledWord', randomWord);
     }
 
     const updatedGuesses = [...guesses, value];
@@ -114,8 +120,8 @@ const Word = () => {
         </button>
       </section>
       <section className="guesses-section">
-        <h3>Guesses</h3>
-        <ul>
+        <h2 className="guesses-title">Guesses</h2>
+        <ul className="guesses-list">
           {guesses.map((guess, index) => (
             <li key={index}>{guess}</li>
           ))}

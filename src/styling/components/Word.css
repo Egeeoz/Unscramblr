@@ -43,7 +43,21 @@
 }
 
 .guesses-section {
-  height: 14vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 30vh;
   width: 100%;
-  border: 1px solid white;
+  border-left: 1px solid white;
+}
+
+.guesses-title {
+  margin-left: 1rem;
+  font-size: 26px;
+}
+
+.guesses-list {
+  margin-left: 1rem;
+  font-size: 28px;
+  list-style: none;
 }
