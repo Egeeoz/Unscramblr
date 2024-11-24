@@ -71,6 +71,11 @@ const Word = () => {
     const value = input.value.trim();
     if (!value) return;
 
+    if (value.length != randomWord.length) {
+      alert(`Guess must be ${randomWord.length} letters long`);
+      return;
+    }
+
     if (guesses.length >= 5) {
       alert('Sorry, You have lost');
       setGameStatus(false);

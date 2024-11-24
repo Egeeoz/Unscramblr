@@ -24,7 +24,11 @@ export const getDailyWord = (
     return { word: storedWord, gameStatus: false };
   }
 
-  const dailyWord = pickRandomWord(words);
+  const filteredWords = words.filter(
+    (word) => /^[a-zA-Z]+$/.test(word) && word.length >= 4 && word.length <= 7
+  );
+  const dailyWord = pickRandomWord(filteredWords);
+
   localStorage.setItem('dailyWord', dailyWord);
   localStorage.setItem('dailyWordDate', today);
   return { word: dailyWord, gameStatus: true };
