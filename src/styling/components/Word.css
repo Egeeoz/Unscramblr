@@ -57,7 +57,10 @@
 }
 
 .guesses-list {
+  height: 80%;
   margin-left: 1rem;
   font-size: 28px;
   list-style: none;
+  padding: 0.5rem 0;
+  text-transform: capitalize;
 }

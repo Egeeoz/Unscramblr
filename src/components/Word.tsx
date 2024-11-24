@@ -106,6 +106,23 @@ const Word = () => {
     }
   };
 
+  const renderGuess = (guess: string) => {
+    return guess.split('').map((letter, index) => {
+      const isCorrect = randomWord[index] === letter;
+      return (
+        <span
+          key={index}
+          style={{
+            color: isCorrect ? 'green' : 'darkred', // Green if correct, otherwise black
+            fontWeight: isCorrect ? 'bold' : 'normal',
+          }}
+        >
+          {letter}
+        </span>
+      );
+    });
+  };
+
   return (
     <>
       <section className="scrambled-container">
@@ -123,7 +140,7 @@ const Word = () => {
         <h2 className="guesses-title">Guesses</h2>
         <ul className="guesses-list">
           {guesses.map((guess, index) => (
-            <li key={index}>{guess}</li>
+            <li key={index}>{renderGuess(guess)}</li>
           ))}
         </ul>
       </section>
