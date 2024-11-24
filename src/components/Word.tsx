@@ -20,9 +20,11 @@ const Word = () => {
   const [scrambledWord, setScrambledWord] = useState<string>(() => {
     return localStorage.getItem('scrambledWord') || '';
   });
-  const [guesses, setGuesses] = useState<string[]>([]);
+  const [guesses, setGuesses] = useState<string[]>(() => {
+    const storedGuesses = localStorage.getItem('guessedWords');
+    return storedGuesses ? JSON.parse(storedGuesses) : [];
+  });
   const [gameStatus, setGameStatus] = useState<boolean>(true);
-  // const [mode, SetMode] = useState<'Daily' | 'Unlimited'>('Daily');
 
   useEffect(() => {
     if (words.length > 0) return;
@@ -92,6 +94,12 @@ const Word = () => {
     input.value = '';
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleGuess();
+    }
+  };
+
   return (
     <>
       <section className="scrambled-container">
@@ -100,7 +108,7 @@ const Word = () => {
         </p>
       </section>
       <section className="guess-input-section">
-        <input type="text" className="guess-input" />
+        <input type="text" className="guess-input" onKeyDown={handleKeyDown} />
         <button className="guess-button" onClick={handleGuess}>
           Guess
         </button>
