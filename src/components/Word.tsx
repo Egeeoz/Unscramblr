@@ -1,27 +1,28 @@
 import { useState, useEffect } from 'react';
 import '../styling/components/Word.css';
+import {
+  pickRandomWord,
+  scrambleWord,
+  getDailyWord,
+  validateGuess,
+} from '../helper/GameLogic';
 
 const Word = () => {
   const [words, setWords] = useState<string[]>(() => {
     const storedWords = localStorage.getItem('englishWords');
     return storedWords ? JSON.parse(storedWords) : [];
   });
+
   const [randomWord, setRandomWord] = useState<string>(() => {
-    const storedRandomWord = localStorage.getItem('randomWord');
-    return storedRandomWord || '';
+    return localStorage.getItem('dailyWord') || '';
   });
 
   const [scrambledWord, setScrambledWord] = useState<string>(() => {
-    const storedScrambledWord = localStorage.getItem('scrambledWord');
-    return storedScrambledWord || '';
+    return localStorage.getItem('scrambledWord') || '';
   });
-
-  const [guesses, setGuesses] = useState<string[]>(() => {
-    const storedGuess = localStorage.getItem('guessedWords');
-    return storedGuess ? JSON.parse(storedGuess) : [];
-  });
-
+  const [guesses, setGuesses] = useState<string[]>([]);
   const [gameStatus, setGameStatus] = useState<boolean>(true);
+  // const [mode, SetMode] = useState<'Daily' | 'Unlimited'>('Daily');
 
   useEffect(() => {
     if (words.length > 0) return;
@@ -47,66 +48,48 @@ const Word = () => {
     fetchWords();
   }, [words.length]);
 
-  const pickRandomWord = () => {
-    setGameStatus(true);
-    setGuesses([]);
-    const randomIndex = Math.floor(Math.random() * words.length);
-    const randomPickedWord = words[randomIndex];
-    setRandomWord(randomPickedWord);
-    localStorage.setItem('randomWord', randomPickedWord);
+  useEffect(() => {
+    if (words.length === 0 || randomWord) return;
 
-    scrambleWord(randomPickedWord);
-  };
+    const dailyWord = getDailyWord(words);
+    setRandomWord(dailyWord);
+    const scrambled = scrambleWord(dailyWord);
+    setScrambledWord(scrambled);
 
-  const scrambleWord = (word: string) => {
-    const chars = word.split('');
-    const currentScrambledWord = chars
-      .sort(() => 0.5 - Math.random())
-      .join('')
-      .toLocaleLowerCase();
-    setScrambledWord(currentScrambledWord);
-    localStorage.setItem('scrambledWord', currentScrambledWord);
-  };
+    localStorage.setItem('dailyWord', dailyWord);
+    localStorage.setItem('scrambledWord', scrambled);
+  }, [words]);
 
   const handleGuess = () => {
-    if (gameStatus) {
-      const input = document.querySelector('.guess-input') as HTMLInputElement;
-      const value = input.value;
-      if (value != '') {
-        if (guesses.length >= 5) {
-          alert('Sorry, You have lost');
-          setGameStatus(false);
-          return;
-        }
+    if (!gameStatus) return;
+    const input = document.querySelector('.guess-input') as HTMLInputElement;
+    const value = input.value.trim();
+    if (!value) return;
 
-        handleGameStatus(value, randomWord);
-
-        const updatedGuesses = [...guesses, value];
-        setGuesses(updatedGuesses);
-        localStorage.setItem('guessedWords', JSON.stringify(updatedGuesses));
-
-        input.value = '';
-        console.log(updatedGuesses);
-      }
+    if (guesses.length >= 5) {
+      alert('Sorry, You have lost');
+      setGameStatus(false);
+      return;
     }
-  };
 
-  const handleGameStatus = (word: string, correctWord: string) => {
-    const normalizedWord = word.toLowerCase();
-    const normalizedCorrectWord = correctWord.toLowerCase();
+    const isCorrect = validateGuess(value, randomWord);
 
-    if (normalizedWord == normalizedCorrectWord) {
+    if (isCorrect) {
       alert('You guessed right! Congratulations!');
       setGameStatus(false);
-      setScrambledWord(normalizedCorrectWord);
     } else if (guesses.length === 4) {
       alert(
-        'You have used all your guesses. The correct word was: ' +
-          normalizedCorrectWord
+        `You have used all your guesses. The correct word was: ${randomWord}`
       );
-      setScrambledWord(normalizedCorrectWord);
+      setScrambledWord(randomWord);
       setGameStatus(false);
     }
+
+    const updatedGuesses = [...guesses, value];
+    setGuesses(updatedGuesses);
+    localStorage.setItem('guessedWords', JSON.stringify(updatedGuesses));
+
+    input.value = '';
   };
 
   return (
@@ -115,9 +98,6 @@ const Word = () => {
         <p className="scrambled-word">
           {scrambledWord || 'Click to get random word'}
         </p>
-        <button className="word-button" onClick={pickRandomWord}>
-          Get a Scrambled word
-        </button>
       </section>
       <section className="guess-input-section">
         <input type="text" className="guess-input" />
