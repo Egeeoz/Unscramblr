@@ -1,18 +1,8 @@
 import { useState, useEffect } from 'react';
 import '../styling/components/Word.css';
-import {
-  pickRandomWord,
-  scrambleWord,
-  getDailyWord,
-  validateGuess,
-} from '../helper/GameLogic';
+import { scrambleWord, validateGuess } from '../helper/GameLogic';
 
 const Word = () => {
-  const [words, setWords] = useState<string[]>(() => {
-    const storedWords = localStorage.getItem('englishWords');
-    return storedWords ? JSON.parse(storedWords) : [];
-  });
-
   const [randomWord, setRandomWord] = useState<string>(() => {
     return localStorage.getItem('dailyWord') || '';
   });
@@ -20,6 +10,7 @@ const Word = () => {
   const [scrambledWord, setScrambledWord] = useState<string>(() => {
     return localStorage.getItem('scrambledWord') || '';
   });
+
   const [guesses, setGuesses] = useState<string[]>(() => {
     const storedGuesses = localStorage.getItem('guessedWords');
     return storedGuesses ? JSON.parse(storedGuesses) : [];
@@ -27,43 +18,45 @@ const Word = () => {
   const [gameStatus, setGameStatus] = useState<boolean>(false);
 
   useEffect(() => {
-    if (words.length > 0) return;
+    const fetchDailWord = async () => {
+      const today = new Date().toISOString().split('T')[0];
+      const storedDate = localStorage.getItem('dailyWordDate');
 
-    const fetchWords = async () => {
-      {
-        try {
-          const response = await fetch('/words.txt');
-          const text = await response.text();
-          const fetchedWords = text
-            .split('\n') // Split the file content into lines.
-            .map((word: string) => word.trim()) // Remove whitespace around each word.
-            .filter((word: string) => word && !word.includes('-')); // Exclude empty lines and words with '-'.
+      if (storedDate === today) {
+        const storedWord = localStorage.getItem('dailyWord') || '';
+        setRandomWord(storedWord);
 
-          setWords(fetchedWords);
-          localStorage.setItem('englishWords', JSON.stringify(fetchedWords));
-        } catch (error) {
-          console.error('Failed to fetch words:', error);
-        }
+        const storedScrambledWord = localStorage.getItem('scrambledWord') || '';
+        setScrambledWord(storedScrambledWord);
+
+        setGameStatus(true);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          'https://agwyz0r4jg.execute-api.eu-north-1.amazonaws.com/dailyword'
+        );
+        if (!response.ok) throw new Error('Failed to fetch daily word');
+
+        const data = await response.json();
+        const dailyWord = data.word;
+        setRandomWord(dailyWord);
+        const scrambledDailyWord = scrambleWord(dailyWord);
+        setScrambledWord(scrambledDailyWord);
+
+        localStorage.setItem('dailyWord', data.word);
+        localStorage.setItem('scrambledWord', scrambledDailyWord);
+        localStorage.setItem('dailyWordDate', today);
+
+        setGameStatus(true);
+      } catch (error) {
+        console.error('Error fetching daily word:', error);
       }
     };
 
-    fetchWords();
-  }, [words.length]);
-
-  useEffect(() => {
-    if (words.length === 0 || randomWord) return;
-
-    const { word, gameStatus: newGameStatus } = getDailyWord(words);
-
-    setGameStatus(newGameStatus);
-
-    setRandomWord(word);
-    const scrambled = scrambleWord(word);
-    setScrambledWord(scrambled);
-
-    localStorage.setItem('dailyWord', word);
-    localStorage.setItem('scrambledWord', scrambled);
-  }, [words]);
+    fetchDailWord();
+  }, []);
 
   const handleGuess = () => {
     if (!gameStatus) return;

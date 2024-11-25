@@ -14,12 +14,18 @@
         "LogGroupName": "/aws/lambda/mixy-dev-userLogin"
       }
     },
+    "DailyWordLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/mixy-dev-dailyWord"
+      }
+    },
     "UserSignUpLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1732034175039-2024-11-19T16:36:15.039Z/userSignUp.zip"
+          "S3Key": "serverless/mixy/dev/1732554934134-2024-11-25T17:15:34.134Z/userSignUp.zip"
         },
         "Handler": "src/backend/functions/userSignup/index.handler",
         "Runtime": "nodejs20.x",
@@ -37,7 +43,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1732034175039-2024-11-19T16:36:15.039Z/userLogin.zip"
+          "S3Key": "serverless/mixy/dev/1732554934134-2024-11-25T17:15:34.134Z/userLogin.zip"
         },
         "Handler": "src/backend/functions/userLogin/index.handler",
         "Runtime": "nodejs20.x",
@@ -50,24 +56,52 @@
         "UserLoginLogGroup"
       ]
     },
-    "UserSignUpLambdaVersionRDL4huJyJLnA2Hxw5huwyJDSQ68TLx2uXF4KNobpac": {
+    "DailyWordLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
+          "S3Key": "serverless/mixy/dev/1732554934134-2024-11-25T17:15:34.134Z/dailyWord.zip"
+        },
+        "Handler": "src/backend/functions/dailyWord/index.handler",
+        "Runtime": "nodejs20.x",
+        "FunctionName": "mixy-dev-dailyWord",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Role": "arn:aws:iam::586794471369:role/serverless"
+      },
+      "DependsOn": [
+        "DailyWordLogGroup"
+      ]
+    },
+    "UserSignUpLambdaVersionZxbTf0Q9MawAnnORnk7utRVG17G6KwXFQUhhB42zgxE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserSignUpLambdaFunction"
         },
-        "CodeSha256": "9O2AxXsIKN54EXPAruq9NUGVPL1kOS+3grF9gcEYqYs="
+        "CodeSha256": "3RsJ0iDAutL7TFAvH/pj4UjdpYZTnOiAYP+W48sfR9U="
       }
     },
-    "UserLoginLambdaVersiontpTtEAh9E2oDinnwLbccAFtzji9XcIoJoSUQQaHxE": {
+    "UserLoginLambdaVersionJJqDJ9w8Drk5D7i7Ld9Pt2x87GeL9BQkrZBKP0G1c": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserLoginLambdaFunction"
         },
-        "CodeSha256": "9O2AxXsIKN54EXPAruq9NUGVPL1kOS+3grF9gcEYqYs="
+        "CodeSha256": "3RsJ0iDAutL7TFAvH/pj4UjdpYZTnOiAYP+W48sfR9U="
+      }
+    },
+    "DailyWordLambdaVersionQbpBQr2pQVwlWl6cFf5mU1oMyuQFtdjmoK9e7n2cBkY": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "DailyWordLambdaFunction"
+        },
+        "CodeSha256": "3RsJ0iDAutL7TFAvH/pj4UjdpYZTnOiAYP+W48sfR9U="
       }
     },
     "HttpApi": {
@@ -255,6 +289,81 @@
       },
       "DependsOn": "HttpApiIntegrationUserLogin"
     },
+    "DailyWordLambdaPermissionHttpApi": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DailyWordLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "HttpApi"
+              },
+              "/*"
+            ]
+          ]
+        }
+      }
+    },
+    "HttpApiIntegrationDailyWord": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "DailyWordLambdaFunction",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "2.0",
+        "TimeoutInMillis": 30000
+      }
+    },
+    "HttpApiRouteGetDailyword": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "RouteKey": "GET /dailyword",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "HttpApiIntegrationDailyWord"
+              }
+            ]
+          ]
+        }
+      },
+      "DependsOn": "HttpApiIntegrationDailyWord"
+    },
     "Users": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
@@ -273,6 +382,25 @@
         ],
         "BillingMode": "PAY_PER_REQUEST"
       }
+    },
+    "DailyWord": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "TableName": "DailyWord",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "date",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "date",
+            "KeyType": "HASH"
+          }
+        ],
+        "BillingMode": "PAY_PER_REQUEST"
+      }
     }
   },
   "Outputs": {
@@ -285,7 +413,7 @@
     "UserSignUpLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserSignUpLambdaVersionRDL4huJyJLnA2Hxw5huwyJDSQ68TLx2uXF4KNobpac"
+        "Ref": "UserSignUpLambdaVersionZxbTf0Q9MawAnnORnk7utRVG17G6KwXFQUhhB42zgxE"
       },
       "Export": {
         "Name": "sls-mixy-dev-UserSignUpLambdaFunctionQualifiedArn"
@@ -294,10 +422,19 @@
     "UserLoginLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserLoginLambdaVersiontpTtEAh9E2oDinnwLbccAFtzji9XcIoJoSUQQaHxE"
+        "Ref": "UserLoginLambdaVersionJJqDJ9w8Drk5D7i7Ld9Pt2x87GeL9BQkrZBKP0G1c"
       },
       "Export": {
         "Name": "sls-mixy-dev-UserLoginLambdaFunctionQualifiedArn"
+      }
+    },
+    "DailyWordLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "DailyWordLambdaVersionQbpBQr2pQVwlWl6cFf5mU1oMyuQFtdjmoK9e7n2cBkY"
+      },
+      "Export": {
+        "Name": "sls-mixy-dev-DailyWordLambdaFunctionQualifiedArn"
       }
     },
     "HttpApiId": {

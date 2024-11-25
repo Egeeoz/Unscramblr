@@ -38,6 +38,12 @@ functions:
       - httpApi:
           path: /login
           method: post
+  dailyWord:
+    handler: src/backend/functions/dailyWord/index.handler
+    events:
+      - httpApi:
+          path: /dailyword
+          method: get
 
 resources:
   Resources:
@@ -50,5 +56,17 @@ resources:
             AttributeType: S
         KeySchema:
           - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+    DailyWord:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: DailyWord
+        AttributeDefinitions:
+          - AttributeName: date
+            AttributeType: S
+        KeySchema:
+          - AttributeName: date
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
