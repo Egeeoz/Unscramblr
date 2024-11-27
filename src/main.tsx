@@ -8,7 +8,7 @@ import { GameProdiver } from './components/GameProvider.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <GameProdiver>
           <App />
         </GameProdiver>
