@@ -9,10 +9,7 @@ const Navbar = () => {
   return (
     <nav>
       <Link to={'/home'}>
-        <h1>
-          Mi<span className="green-x">x</span>
-          <span className="red-x">x</span>y
-        </h1>
+        <h1>Unscramblr</h1>
       </Link>
       <header>
         {isLoggedIn ? (

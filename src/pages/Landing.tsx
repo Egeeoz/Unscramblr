@@ -6,10 +6,7 @@ const Landing = () => {
   return (
     <section className="landing-container">
       <section className="wrapper">
-        <h1>
-          Welcome to Mi<span className="green-x">x</span>
-          <span className="red-x">x</span>y
-        </h1>
+        <h1>Welcome to Unscramblr</h1>
         <p>
           Every day, you'll get a new scrambled word to solve. You have 5
           guesses to unscramble it, and each guess must match the word's length.
