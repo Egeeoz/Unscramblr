@@ -1,0 +1,35 @@
+.landing-container {
+  height: 86vh;
+  width: 100%;
+  display: flex;
+}
+
+.wrapper {
+  height: 40vh;
+  background-color: #2d2d2d;
+  margin: auto;
+  display: flex;
+  width: 30%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 20px;
+}
+
+.wrapper h1 {
+  font-size: 28px;
+}
+
+.wrapper p {
+  width: 80%;
+  font-size: 22px;
+}
+
+.green-x {
+  color: green;
+}
+
+.red-x {
+  color: darkred;
+}

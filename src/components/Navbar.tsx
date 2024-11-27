@@ -8,13 +8,15 @@ const Navbar = () => {
 
   return (
     <nav>
-      <Link to={'/'}>
+      <Link to={'/home'}>
         <h1>Mixxy</h1>
       </Link>
       <header>
         {isLoggedIn ? (
           <>
-            <h2>{username}</h2>
+            <h2 className="username">
+              <Link to="/profile">{username}</Link>
+            </h2>
             <Button text="Log out" onClick={logout} />
           </>
         ) : (
