@@ -103,7 +103,6 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
       value,
       randomWord,
       guesses,
-      gameStatus,
       setGameStatus,
       setScrambledWord,
       setGuesses,

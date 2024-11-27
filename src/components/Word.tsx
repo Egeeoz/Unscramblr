@@ -56,14 +56,7 @@ const Word = () => {
           Guess
         </button>
       </section>
-      <p
-        className="result-message"
-        style={{
-          color: winOrLose == 'You win!' ? 'green' : 'darkred', // Green if correct, otherwise black
-        }}
-      >
-        {winOrLose}
-      </p>
+      <p>{winOrLose}</p>
       <section className="guesses-section">
         <h2 className="guesses-title">Guesses</h2>
         <ul className="guesses-list">
