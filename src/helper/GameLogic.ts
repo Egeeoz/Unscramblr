@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-// This function is to scramble the word
+
 export const scrambleWord = (word: string): string => {
   return word
     .split('')
@@ -16,21 +16,25 @@ export const handleGuess = (
   value: string,
   randomWord: string,
   guesses: string[],
-  gameStatus: boolean,
   setGameStatus: Dispatch<SetStateAction<boolean>>,
   setScrambledWord: Dispatch<SetStateAction<string>>,
-  setGuesses: Dispatch<SetStateAction<string[]>>
+  setGuesses: Dispatch<SetStateAction<string[]>>,
+  setWinOrLose: Dispatch<SetStateAction<string>>,
+  toastAlert: (message: string) => void
 ) => {
-  if (!gameStatus) return;
+  const storedGameStatus = localStorage.getItem('gameStatus');
+  if (storedGameStatus === 'false') {
+    return;
+  }
   if (!value) return;
 
   if (value.length != randomWord.length) {
-    alert(`Guess must be ${randomWord.length} letters long`);
+    toastAlert(`Guess must be ${randomWord.length} letters long`);
     return;
   }
 
   if (guesses.length >= 5) {
-    alert('Sorry, You have lost');
+    toastAlert('Sorry, You have lost');
     setGameStatus(false);
     return;
   }
@@ -38,16 +42,22 @@ export const handleGuess = (
   const isCorrect = validateGuess(value, randomWord);
 
   if (isCorrect) {
-    alert('You guessed right! Congratulations!');
+    toastAlert('You guessed right! Congratulations!');
     setGameStatus(false);
+    localStorage.setItem('gameStatus', 'false');
     setScrambledWord(randomWord);
+    setWinOrLose('You win!');
+    localStorage.setItem('winOrLose', 'You win!');
     localStorage.setItem('scrambledWord', randomWord);
   } else if (guesses.length === 4) {
-    alert(
+    toastAlert(
       `You have used all your guesses. The correct word was: ${randomWord}`
     );
     setGameStatus(false);
+    localStorage.setItem('gameStatus', 'false');
     setScrambledWord(randomWord);
+    setWinOrLose('You lose!');
+    localStorage.setItem('winOrLose', 'You lose!');
     localStorage.setItem('scrambledWord', randomWord);
   }
 
