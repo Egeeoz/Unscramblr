@@ -27,3 +27,16 @@ a h1 {
   margin-left: 7rem;
   padding: 0.5rem;
 }
+
+.username {
+  text-transform: capitalize;
+  text-decoration: underline;
+}
+
+.green-x {
+  color: green;
+}
+
+.red-x {
+  color: darkred;
+}

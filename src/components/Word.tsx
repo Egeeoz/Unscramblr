@@ -60,6 +60,7 @@ const Word = () => {
         className="result-message"
         style={{
           color: winOrLose == 'You win!' ? 'green' : 'darkred', // Green if correct, otherwise black
+          fontWeight: winOrLose == 'You lose!' ? 'bold' : 'normal',
         }}
       >
         {winOrLose}

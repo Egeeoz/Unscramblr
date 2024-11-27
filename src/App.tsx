@@ -6,16 +6,22 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from './components/Footer';
+import Landing from './pages/Landing';
+import Profile from './pages/Profile';
 
 function App() {
   return (
     <main className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
+      <Footer />
       <ToastContainer
         transition={Slide}
         style={{
