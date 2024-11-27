@@ -1,9 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
+import { Slide, ToastContainer } from 'react-toastify';
 import './App.css';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -14,6 +16,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+      <ToastContainer
+        transition={Slide}
+        style={{
+          fontSize: '20px',
+        }}
+      />
     </main>
   );
 }

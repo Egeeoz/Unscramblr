@@ -4,8 +4,11 @@ import React, {
   useState,
   useEffect,
   ReactNode,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 import { handleGuess, scrambleWord } from '../helper/GameLogic';
+import { toast } from 'react-toastify';
 
 interface GameContextType {
   randomWord: string;
@@ -13,6 +16,9 @@ interface GameContextType {
   guesses: string[];
   gameStatus: boolean;
   handleGuess: (guess: string) => void;
+  winOrLose: string;
+  setWinOrLose: Dispatch<SetStateAction<string>>;
+  toastAlert: (message: string) => void;
 }
 
 interface GameProviderProps {
@@ -30,10 +36,26 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
     const storedGuesses = localStorage.getItem('guessedWords');
     return storedGuesses ? JSON.parse(storedGuesses) : [];
   });
-  const [gameStatus, setGameStatus] = useState<boolean>(false);
+
+  const [gameStatus, setGameStatus] = useState<boolean>(() => {
+    const storedGameStatus = localStorage.getItem('gameStatus');
+    return storedGameStatus === 'true';
+  });
+
+  const [winOrLose, setWinOrLose] = useState<string>(() => {
+    const storedWinOrLose = localStorage.getItem('winOrLose');
+    return storedWinOrLose || '';
+  });
+
+  const toastAlert = (message: string) =>
+    toast(message, {
+      theme: 'dark',
+      autoClose: 3000,
+      position: 'top-center',
+    });
 
   useEffect(() => {
-    const fetchDailWord = async () => {
+    const fetchDailyWord = async () => {
       const today = new Date().toISOString().split('T')[0];
       const storedDate = localStorage.getItem('dailyWordDate');
 
@@ -59,10 +81,13 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
         setRandomWord(dailyWord);
         const scrambledDailyWord = scrambleWord(dailyWord);
         setScrambledWord(scrambledDailyWord);
-
+        setGuesses([]);
+        localStorage.setItem('guessedWords', JSON.stringify([]));
         localStorage.setItem('dailyWord', data.word);
         localStorage.setItem('scrambledWord', scrambledDailyWord);
         localStorage.setItem('dailyWordDate', today);
+        localStorage.setItem('winOrLose', '');
+        localStorage.setItem('gameStatus', 'true');
 
         setGameStatus(true);
       } catch (error) {
@@ -70,7 +95,7 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
       }
     };
 
-    fetchDailWord();
+    fetchDailyWord();
   }, []);
 
   const guessHandler = (value: string) => {
@@ -81,7 +106,9 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
       gameStatus,
       setGameStatus,
       setScrambledWord,
-      setGuesses
+      setGuesses,
+      setWinOrLose,
+      toastAlert
     );
   };
 
@@ -92,7 +119,10 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
         scrambledWord,
         guesses,
         gameStatus,
+        winOrLose,
         handleGuess: guessHandler,
+        setWinOrLose,
+        toastAlert,
       }}
     >
       {children}
