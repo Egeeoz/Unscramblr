@@ -1,11 +1,11 @@
 .landing-container {
-  height: 86vh;
+  height: 85vh;
   width: 100%;
   display: flex;
 }
 
 .wrapper {
-  height: 40vh;
+  height: 35vh;
   background-color: #2d2d2d;
   margin: auto;
   display: flex;
@@ -15,6 +15,7 @@
   align-items: center;
   gap: 1rem;
   border-radius: 20px;
+  border: 2px solid white;
 }
 
 .wrapper h1 {

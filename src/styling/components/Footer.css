@@ -1,5 +1,8 @@
 footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2d2d2d;
   font-size: 20px;
-  height: 5vh;
-  text-align: center;
+  height: 6vh;
 }
