@@ -14,17 +14,25 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
+  const [username, setUsername] = useState(() => {
+    return localStorage.getItem('username') || '';
+  });
 
   const login = (username: string) => {
     setIsLoggedIn(true);
     setUsername(username);
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('username', username);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setUsername('');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
   };
 
   return (
