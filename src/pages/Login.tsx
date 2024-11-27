@@ -3,10 +3,12 @@ import Form from '../components/Form';
 import { useAuth } from '../helper/AuthContext';
 import '../styling/pages/Login.css';
 import { loginUser } from '../helper/Api';
+import { useGame } from '../components/GameProvider';
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { toastAlert } = useGame();
 
   const handleLogin = async (formData: {
     email: string;
@@ -16,13 +18,13 @@ const Login = () => {
     try {
       const response = await loginUser(formData);
 
-      alert('Login Successfull');
+      toastAlert('Login Successfull');
       const username = response.username;
 
       login(username);
       navigate('/');
     } catch (error) {
-      alert(error || 'Login Failed');
+      toastAlert('Login Failed');
     }
   };
 

@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import Form from '../components/Form';
 import { signupUser } from '../helper/Api';
 import '../styling/pages/Signup.css';
+import { useGame } from '../components/GameProvider';
 
 export const Signup = () => {
   const navigate = useNavigate();
+  const { toastAlert } = useGame();
 
   const handleSignup = async (formData: {
     email: string;
@@ -12,17 +14,17 @@ export const Signup = () => {
     username?: string;
   }) => {
     if (!formData.username) {
-      alert('Username is required');
+      toastAlert('Username is required');
       return;
     }
 
     try {
       const dataToSend = { ...formData, username: formData.username as string };
       await signupUser(dataToSend);
-      alert('Signup Successful');
+      toastAlert('Signup Successful');
       navigate('/login');
     } catch (error) {
-      alert(error || 'Signup failed');
+      toastAlert('Signup failed');
     }
   };
 
