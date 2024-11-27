@@ -56,7 +56,7 @@ const Word = () => {
           Guess
         </button>
       </section>
-      <p>{winOrLose}</p>
+      <p className="result-message">{winOrLose}</p>
       <section className="guesses-section">
         <h2 className="guesses-title">Guesses</h2>
         <ul className="guesses-list">
