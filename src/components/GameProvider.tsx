@@ -56,10 +56,19 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const fetchDailyWord = async () => {
-      const today = new Date().toISOString().split('T')[0];
-      const storedDate = localStorage.getItem('dailyWordDate');
+      const today = new Date();
+      const todayFormatted = `${String(today.getDate()).padStart(
+        2,
+        '0'
+      )}/${String(today.getMonth() + 1).padStart(
+        2,
+        '0'
+      )}/${today.getFullYear()}`;
 
-      if (storedDate === today) {
+      console.log(todayFormatted);
+
+      const storedDate = localStorage.getItem('dailyWordDate');
+      if (storedDate === todayFormatted) {
         const storedWord = localStorage.getItem('dailyWord') || '';
         setRandomWord(storedWord);
 
@@ -78,6 +87,7 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
 
         const data = await response.json();
         const dailyWord = data.word;
+
         setRandomWord(dailyWord);
         const scrambledDailyWord = scrambleWord(dailyWord);
         setScrambledWord(scrambledDailyWord);
@@ -85,10 +95,9 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
         localStorage.setItem('guessedWords', JSON.stringify([]));
         localStorage.setItem('dailyWord', data.word);
         localStorage.setItem('scrambledWord', scrambledDailyWord);
-        localStorage.setItem('dailyWordDate', today);
+        localStorage.setItem('dailyWordDate', todayFormatted);
         localStorage.setItem('winOrLose', '');
         localStorage.setItem('gameStatus', 'true');
-
         setGameStatus(true);
       } catch (error) {
         console.error('Error fetching daily word:', error);
