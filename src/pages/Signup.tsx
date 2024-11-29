@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Form from '../components/Form';
 import { signupUser } from '../helper/Api';
-import '../styling/pages/Signup.css';
 import { useGame } from '../components/GameProvider';
 
 export const Signup = () => {
@@ -29,9 +28,9 @@ export const Signup = () => {
   };
 
   return (
-    <section className="signup-form-section">
+    <>
       <Form header="Signup" onSubmit={handleSignup} />
-    </section>
+    </>
   );
 };
 
