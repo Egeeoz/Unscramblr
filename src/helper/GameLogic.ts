@@ -1,11 +1,15 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export const scrambleWord = (word: string): string => {
-  return word
+  const scrambledWord = word
     .split('')
     .sort(() => 0.5 - Math.random())
     .join('')
     .toLocaleLowerCase();
+  if (scrambledWord == word) {
+    return scrambleWord(word);
+  }
+  return scrambledWord;
 };
 
 export const validateGuess = (guess: string, correctWord: string): boolean => {
