@@ -3,10 +3,8 @@ import '../styling/pages/Home.css';
 
 const Home = () => {
   return (
-    <section className="main-container">
-      <section className="word-container">
-        <Word />
-      </section>
+    <section className="game-container">
+      <Word />
     </section>
   );
 };

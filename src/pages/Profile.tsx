@@ -1,4 +1,4 @@
-import '../styling/pages/Profile.css';
+// import '../styling/pages/Profile.css';
 
 const Profile = () => {
   return (

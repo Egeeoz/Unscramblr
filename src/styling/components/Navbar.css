@@ -1,42 +1,24 @@
 nav {
   height: 9vh;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
 nav header {
-  min-width: 18vw;
-  width: auto;
   display: flex;
-  justify-content: space-around;
-  margin-right: 7rem;
   align-items: center;
   border-right: 2px solid white;
   border-left: 2px solid white;
   padding: 0 1rem;
-}
-
-header a {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  gap: 1rem;
 }
 
 a h1 {
   font-size: 32px;
-  margin-left: 7rem;
-  padding: 0.5rem;
 }
 
 .username {
   text-transform: capitalize;
   text-decoration: underline;
-}
-
-.green-x {
-  color: green;
-}
-
-.red-x {
-  color: darkred;
 }

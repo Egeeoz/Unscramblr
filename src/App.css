@@ -9,6 +9,59 @@
 
 .App {
   min-height: 100vh;
-  width: 100%;
   background-color: #242424;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  padding-top: 4rem;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+@media (min-width: 450px) and (max-width: 1024px) {
+  /* Landing page responsive TABLET*/
+  .main-container .wrapper {
+    width: 80%;
+  }
+
+  /* Login page responsive TABLET*/
+  .main-container form {
+    width: 50%;
+  }
+}
+
+@media (max-width: 450px) {
+  /* Navbar Responsive */
+  nav {
+    justify-content: space-between;
+  }
+
+  nav .button {
+    padding: 0.75rem 1rem;
+    font-size: 85%;
+  }
+
+  nav a h1 {
+    font-size: 5.5vw;
+  }
+
+  /* Landing page responsive */
+  .main-container .wrapper {
+    width: 80%;
+  }
+
+  /* Home page responsive */
+  .game-container {
+    width: 80%;
+  }
+
+  /* Login page responsive */
+  .main-container form {
+    width: 80%;
+  }
 }
