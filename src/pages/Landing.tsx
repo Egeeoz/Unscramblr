@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const Landing = () => {
   return (
-    // <section className="landing-container">
     <section className="wrapper">
       <h1>Welcome to Unscramblr</h1>
       <p>
@@ -20,7 +19,6 @@ const Landing = () => {
         <Button text="Play now!" />
       </Link>
     </section>
-    // </section>
   );
 };
 
