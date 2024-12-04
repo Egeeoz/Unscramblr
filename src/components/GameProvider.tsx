@@ -92,6 +92,7 @@ export const GameProdiver: React.FC<GameProviderProps> = ({ children }) => {
         const scrambledDailyWord = scrambleWord(dailyWord);
         setScrambledWord(scrambledDailyWord);
         setGuesses([]);
+        setWinOrLose('');
         localStorage.setItem('guessedWords', JSON.stringify([]));
         localStorage.setItem('dailyWord', data.word);
         localStorage.setItem('scrambledWord', scrambledDailyWord);
