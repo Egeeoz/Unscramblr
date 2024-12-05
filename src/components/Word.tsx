@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../styling/components/Word.css';
 import { useGame } from '../components/GameProvider';
+import Button from './Button';
 
 const Word = () => {
   const { randomWord, scrambledWord, guesses, handleGuess, winOrLose } =
@@ -53,9 +54,7 @@ const Word = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <button className="guess-button" onClick={handleOnClick}>
-          Guess
-        </button>
+        <Button onClick={handleOnClick} text="Guess" />
       </section>
       <p
         className="result-message"
