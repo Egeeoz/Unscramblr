@@ -64,4 +64,9 @@
   .main-container form {
     width: 80%;
   }
+
+  /* Footer page responsive */
+  main footer {
+    font-size: 4.5vw;
+  }
 }
