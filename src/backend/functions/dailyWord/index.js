@@ -1,22 +1,21 @@
 import { sendError, sendResponse } from '../../responses/index.js';
 import { GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 import { db } from '../../services/db.js';
-import { fileURLToPath } from 'url';
-import path from 'path';
-import fs from 'fs';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import words from 'an-array-of-english-words';
 
-const WORDS_FILE = path.resolve(__dirname, '../../../../public/words.txt');
+export const handler = async () => {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
 
-export const handler = async (event) => {
-  const today = new Date().toISOString().split('T')[0];
+  const todayFormatted = today.toISOString().split('T')[0];
 
   try {
     const getParams = {
       TableName: 'DailyWord',
-      Key: { date: today },
+      Key: { date: todayFormatted },
     };
 
     const getCommand = new GetCommand(getParams);
@@ -30,27 +29,17 @@ export const handler = async (event) => {
     sendError(500, 'Internal server error');
   }
 
-  let words;
-  try {
-    const fileContens = fs.readFileSync(WORDS_FILE, 'utf-8');
-    words = fileContens
-      .split('\n')
-      .map((word) => word.trim())
-      .filter(
-        (word) =>
-          /^[a-zA-Z]+$/.test(word) && word.length >= 4 && word.length <= 7
-      );
-  } catch (error) {
-    console.error('Error reading or processing words file:', error);
-    return sendError(500, 'Internal server error (read and filter words)');
-  }
+  const filteredWords = words.filter(
+    (word) => /^[a-zA-Z]+$/.test(word) && word.length >= 4 && word.length <= 7
+  );
 
-  const randomWord = words[Math.floor(Math.random() * words.length)];
+  const randomWord =
+    filteredWords[Math.floor(Math.random() * filteredWords.length)];
 
   try {
     const putParams = {
       TableName: 'DailyWord',
-      Item: { date: today, word: randomWord },
+      Item: { date: todayFormatted, word: randomWord },
     };
 
     const putCommand = new PutCommand(putParams);
