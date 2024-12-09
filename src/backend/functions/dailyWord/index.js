@@ -1,16 +1,12 @@
 import { sendError, sendResponse } from '../../responses/index.js';
 import { GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 import { db } from '../../services/db.js';
-
-import words from 'an-array-of-english-words';
+import words from 'an-array-of-english-words' assert { type: 'json' };
 
 export const handler = async () => {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-  tomorrow.setHours(0, 0, 0, 0);
-
-  const todayFormatted = today.toISOString().split('T')[0];
+  const todayFormatted = new Date(Date.now() + 3600000)
+    .toISOString()
+    .substring(0, 10);
 
   try {
     const getParams = {

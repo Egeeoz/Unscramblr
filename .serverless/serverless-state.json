@@ -57,7 +57,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-                "S3Key": "serverless/mixy/dev/1733783343450-2024-12-09T22:29:03.450Z/userSignUp.zip"
+                "S3Key": "serverless/mixy/dev/1733786612618-2024-12-09T23:23:32.618Z/userSignUp.zip"
               },
               "Handler": "src/backend/functions/userSignup/index.handler",
               "Runtime": "nodejs20.x",
@@ -75,7 +75,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-                "S3Key": "serverless/mixy/dev/1733783343450-2024-12-09T22:29:03.450Z/userLogin.zip"
+                "S3Key": "serverless/mixy/dev/1733786612618-2024-12-09T23:23:32.618Z/userLogin.zip"
               },
               "Handler": "src/backend/functions/userLogin/index.handler",
               "Runtime": "nodejs20.x",
@@ -93,7 +93,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-                "S3Key": "serverless/mixy/dev/1733783343450-2024-12-09T22:29:03.450Z/dailyWord.zip"
+                "S3Key": "serverless/mixy/dev/1733786612618-2024-12-09T23:23:32.618Z/dailyWord.zip"
               },
               "Handler": "src/backend/functions/dailyWord/index.handler",
               "Runtime": "nodejs20.x",
@@ -106,34 +106,34 @@
               "DailyWordLogGroup"
             ]
           },
-          "UserSignUpLambdaVersion1842XqPBPbMuCrWL9g291MtwXo9dVxmelgrmyDarE": {
+          "UserSignUpLambdaVersionlo86bKqfcb51SrfZxNpZrfV9j9RnViimEDY7qMg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UserSignUpLambdaFunction"
               },
-              "CodeSha256": "SuVY5Lk9OW78IWw3fEppo0EEYmPRZK5aFWDfpVb7/Kk="
+              "CodeSha256": "vf63jhl3xHtxcrIlyAnYUXBm/5t1xv576ToGm2Zx2DM="
             }
           },
-          "UserLoginLambdaVersionRQOT6wAjwY8Tma3UBII3xDyLguEbHkBFOFeOKm2Ss1I": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "UserLoginLambdaFunction"
-              },
-              "CodeSha256": "SuVY5Lk9OW78IWw3fEppo0EEYmPRZK5aFWDfpVb7/Kk="
-            }
-          },
-          "DailyWordLambdaVersionuDIBJsZKuZrnzEJPX2dbinrxiv4WMPJ3Y6XUcruc8": {
+          "DailyWordLambdaVersiono9eCbwwD2g9tTtQwy4b3iQWQt0goSk3CSL3UDzZ84c": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DailyWordLambdaFunction"
               },
-              "CodeSha256": "SuVY5Lk9OW78IWw3fEppo0EEYmPRZK5aFWDfpVb7/Kk="
+              "CodeSha256": "vf63jhl3xHtxcrIlyAnYUXBm/5t1xv576ToGm2Zx2DM="
+            }
+          },
+          "UserLoginLambdaVersion6VrJlfSz4KRneBY4T4Rsj4SJ4AfT9EDEGZyOLbAjOk": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UserLoginLambdaFunction"
+              },
+              "CodeSha256": "vf63jhl3xHtxcrIlyAnYUXBm/5t1xv576ToGm2Zx2DM="
             }
           },
           "HttpApi": {
@@ -436,28 +436,28 @@
           "UserSignUpLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UserSignUpLambdaVersion1842XqPBPbMuCrWL9g291MtwXo9dVxmelgrmyDarE"
+              "Ref": "UserSignUpLambdaVersionlo86bKqfcb51SrfZxNpZrfV9j9RnViimEDY7qMg"
             },
             "Export": {
               "Name": "sls-mixy-dev-UserSignUpLambdaFunctionQualifiedArn"
             }
           },
-          "UserLoginLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "UserLoginLambdaVersionRQOT6wAjwY8Tma3UBII3xDyLguEbHkBFOFeOKm2Ss1I"
-            },
-            "Export": {
-              "Name": "sls-mixy-dev-UserLoginLambdaFunctionQualifiedArn"
-            }
-          },
           "DailyWordLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DailyWordLambdaVersionuDIBJsZKuZrnzEJPX2dbinrxiv4WMPJ3Y6XUcruc8"
+              "Ref": "DailyWordLambdaVersiono9eCbwwD2g9tTtQwy4b3iQWQt0goSk3CSL3UDzZ84c"
             },
             "Export": {
               "Name": "sls-mixy-dev-DailyWordLambdaFunctionQualifiedArn"
+            }
+          },
+          "UserLoginLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UserLoginLambdaVersion6VrJlfSz4KRneBY4T4Rsj4SJ4AfT9EDEGZyOLbAjOk"
+            },
+            "Export": {
+              "Name": "sls-mixy-dev-UserLoginLambdaFunctionQualifiedArn"
             }
           },
           "HttpApiId": {
@@ -520,7 +520,7 @@
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UserSignUpLambdaVersion1842XqPBPbMuCrWL9g291MtwXo9dVxmelgrmyDarE"
+        "versionLogicalId": "UserSignUpLambdaVersionlo86bKqfcb51SrfZxNpZrfV9j9RnViimEDY7qMg"
       },
       "userLogin": {
         "handler": "src/backend/functions/userLogin/index.handler",
@@ -542,7 +542,7 @@
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "UserLoginLambdaVersionRQOT6wAjwY8Tma3UBII3xDyLguEbHkBFOFeOKm2Ss1I"
+        "versionLogicalId": "UserLoginLambdaVersion6VrJlfSz4KRneBY4T4Rsj4SJ4AfT9EDEGZyOLbAjOk"
       },
       "dailyWord": {
         "handler": "src/backend/functions/dailyWord/index.handler",
@@ -564,7 +564,7 @@
         "timeout": 6,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "DailyWordLambdaVersionuDIBJsZKuZrnzEJPX2dbinrxiv4WMPJ3Y6XUcruc8"
+        "versionLogicalId": "DailyWordLambdaVersiono9eCbwwD2g9tTtQwy4b3iQWQt0goSk3CSL3UDzZ84c"
       }
     },
     "resources": {
@@ -623,7 +623,7 @@
         "excludeDevDependencies": true,
         "artifactsS3KeyDirname": "serverless/mixy/dev/code-artifacts",
         "deploymentBucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-        "artifactDirectoryName": "serverless/mixy/dev/1733783343450-2024-12-09T22:29:03.450Z"
+        "artifactDirectoryName": "serverless/mixy/dev/1733786612618-2024-12-09T23:23:32.618Z"
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
@@ -639,7 +639,7 @@
   },
   "package": {
     "individually": true,
-    "artifactDirectoryName": "serverless/mixy/dev/1733783343450-2024-12-09T22:29:03.450Z",
+    "artifactDirectoryName": "serverless/mixy/dev/1733786612618-2024-12-09T23:23:32.618Z",
     "artifact": ""
   }
 }
