@@ -54,71 +54,85 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       position: 'top-center',
     });
 
-  useEffect(() => {
-    const fetchDailyWord = async () => {
-      const now = new Date();
-      const todayMidnight = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        0,
-        0,
-        0,
-        0
-      );
+  const resetGameState = (newWord: string) => {
+    const scrambledNewWord = scrambleWord(newWord);
+    setRandomWord(newWord);
+    setScrambledWord(scrambledNewWord);
+    setGuesses([]);
+    setWinOrLose('');
+    setGameStatus(true);
 
-      const todayFormatted = `${todayMidnight.getFullYear()}-${String(
-        todayMidnight.getMonth() + 1
-      ).padStart(2, '0')}-${String(todayMidnight.getDate()).padStart(2, '0')}`;
+    localStorage.setItem('guessedWords', JSON.stringify([]));
+    localStorage.setItem('dailyWord', newWord);
+    localStorage.setItem('scrambledWord', scrambledNewWord);
+    localStorage.setItem('winOrLose', '');
+    localStorage.setItem('gameStatus', 'true');
+  };
 
-      const storedDate = localStorage.getItem('dailyWordDate');
+  const fetchDailyWord = async () => {
+    const now = new Date();
+    const todayMidnight = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      0,
+      0,
+      0,
+      0
+    );
 
-      if (storedDate !== todayFormatted) {
-        try {
-          const response = await fetch(
-            'https://agwyz0r4jg.execute-api.eu-north-1.amazonaws.com/dailyword'
-          );
-          if (!response.ok) throw new Error('Failed to fetch daily word');
+    const todayFormatted = `${todayMidnight.getFullYear()}-${String(
+      todayMidnight.getMonth() + 1
+    ).padStart(2, '0')}-${String(todayMidnight.getDate()).padStart(2, '0')}`;
 
-          const data = await response.json();
-          const dailyWord = data.word;
+    const storedDate = localStorage.getItem('dailyWordDate');
 
-          // Reset game state
-          setRandomWord(dailyWord);
-          const scrambledDailyWord = scrambleWord(dailyWord);
-          setScrambledWord(scrambledDailyWord);
-          setGuesses([]);
-          setWinOrLose('');
+    if (storedDate !== todayFormatted) {
+      try {
+        const response = await fetch(
+          'https://agwyz0r4jg.execute-api.eu-north-1.amazonaws.com/dailyword'
+        );
+        if (!response.ok) throw new Error('Failed to fetch daily word');
 
-          // Update local storage
-          localStorage.setItem('guessedWords', JSON.stringify([]));
-          localStorage.setItem('dailyWord', data.word);
-          localStorage.setItem('scrambledWord', scrambledDailyWord);
-          localStorage.setItem('dailyWordDate', todayFormatted);
-          localStorage.setItem('winOrLose', '');
-          localStorage.setItem('gameStatus', 'true');
-          setGameStatus(true);
-        } catch (error) {
-          console.error('Error fetching daily word:', error);
-          const storedWord = localStorage.getItem('dailyWord') || '';
+        const data = await response.json();
+        resetGameState(data.word);
+        localStorage.setItem('dailyWordDate', todayFormatted);
+      } catch (error) {
+        console.error('Error fetching daily word:', error);
+        const storedWord = localStorage.getItem('dailyWord');
+        if (!storedWord) {
+          setTimeout(fetchDailyWord, 60000);
+        } else {
           setRandomWord(storedWord);
-          const storedScrambledWord =
-            localStorage.getItem('scrambledWord') || '';
-          setScrambledWord(storedScrambledWord);
+          setScrambledWord(localStorage.getItem('scrambledWord') || '');
         }
-      } else {
-        const storedWord = localStorage.getItem('dailyWord') || '';
-        setRandomWord(storedWord);
-        const storedScrambledWord = localStorage.getItem('scrambledWord') || '';
-        setScrambledWord(storedScrambledWord);
       }
-    };
+    } else {
+      const storedWord = localStorage.getItem('dailyWord') || '';
+      setRandomWord(storedWord);
+      const storedScrambledWord = localStorage.getItem('scrambledWord') || '';
+      setScrambledWord(storedScrambledWord);
+    }
+  };
 
+  useEffect(() => {
     fetchDailyWord();
 
-    const intervalId = setInterval(fetchDailyWord, 4 * 60 * 60 * 1000);
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
 
-    return () => clearInterval(intervalId);
+    const msUntilMidnight = tomorrow.getTime() - now.getTime();
+
+    const timeoutId = setTimeout(() => {
+      fetchDailyWord();
+      setInterval(fetchDailyWord, 24 * 60 * 60 * 1000);
+    }, msUntilMidnight);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const guessHandler = (value: string) => {
