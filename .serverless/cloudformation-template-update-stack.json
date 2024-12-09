@@ -25,7 +25,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1732554934134-2024-11-25T17:15:34.134Z/userSignUp.zip"
+          "S3Key": "serverless/mixy/dev/1733783343450-2024-12-09T22:29:03.450Z/userSignUp.zip"
         },
         "Handler": "src/backend/functions/userSignup/index.handler",
         "Runtime": "nodejs20.x",
@@ -43,7 +43,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1732554934134-2024-11-25T17:15:34.134Z/userLogin.zip"
+          "S3Key": "serverless/mixy/dev/1733783343450-2024-12-09T22:29:03.450Z/userLogin.zip"
         },
         "Handler": "src/backend/functions/userLogin/index.handler",
         "Runtime": "nodejs20.x",
@@ -61,7 +61,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-eu-north-1-4da07052-7650",
-          "S3Key": "serverless/mixy/dev/1732554934134-2024-11-25T17:15:34.134Z/dailyWord.zip"
+          "S3Key": "serverless/mixy/dev/1733783343450-2024-12-09T22:29:03.450Z/dailyWord.zip"
         },
         "Handler": "src/backend/functions/dailyWord/index.handler",
         "Runtime": "nodejs20.x",
@@ -74,34 +74,34 @@
         "DailyWordLogGroup"
       ]
     },
-    "UserSignUpLambdaVersionZxbTf0Q9MawAnnORnk7utRVG17G6KwXFQUhhB42zgxE": {
+    "UserSignUpLambdaVersion1842XqPBPbMuCrWL9g291MtwXo9dVxmelgrmyDarE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserSignUpLambdaFunction"
         },
-        "CodeSha256": "3RsJ0iDAutL7TFAvH/pj4UjdpYZTnOiAYP+W48sfR9U="
+        "CodeSha256": "SuVY5Lk9OW78IWw3fEppo0EEYmPRZK5aFWDfpVb7/Kk="
       }
     },
-    "UserLoginLambdaVersionJJqDJ9w8Drk5D7i7Ld9Pt2x87GeL9BQkrZBKP0G1c": {
+    "UserLoginLambdaVersionRQOT6wAjwY8Tma3UBII3xDyLguEbHkBFOFeOKm2Ss1I": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserLoginLambdaFunction"
         },
-        "CodeSha256": "3RsJ0iDAutL7TFAvH/pj4UjdpYZTnOiAYP+W48sfR9U="
+        "CodeSha256": "SuVY5Lk9OW78IWw3fEppo0EEYmPRZK5aFWDfpVb7/Kk="
       }
     },
-    "DailyWordLambdaVersionQbpBQr2pQVwlWl6cFf5mU1oMyuQFtdjmoK9e7n2cBkY": {
+    "DailyWordLambdaVersionuDIBJsZKuZrnzEJPX2dbinrxiv4WMPJ3Y6XUcruc8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DailyWordLambdaFunction"
         },
-        "CodeSha256": "3RsJ0iDAutL7TFAvH/pj4UjdpYZTnOiAYP+W48sfR9U="
+        "CodeSha256": "SuVY5Lk9OW78IWw3fEppo0EEYmPRZK5aFWDfpVb7/Kk="
       }
     },
     "HttpApi": {
@@ -413,7 +413,7 @@
     "UserSignUpLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserSignUpLambdaVersionZxbTf0Q9MawAnnORnk7utRVG17G6KwXFQUhhB42zgxE"
+        "Ref": "UserSignUpLambdaVersion1842XqPBPbMuCrWL9g291MtwXo9dVxmelgrmyDarE"
       },
       "Export": {
         "Name": "sls-mixy-dev-UserSignUpLambdaFunctionQualifiedArn"
@@ -422,7 +422,7 @@
     "UserLoginLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserLoginLambdaVersionJJqDJ9w8Drk5D7i7Ld9Pt2x87GeL9BQkrZBKP0G1c"
+        "Ref": "UserLoginLambdaVersionRQOT6wAjwY8Tma3UBII3xDyLguEbHkBFOFeOKm2Ss1I"
       },
       "Export": {
         "Name": "sls-mixy-dev-UserLoginLambdaFunctionQualifiedArn"
@@ -431,7 +431,7 @@
     "DailyWordLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DailyWordLambdaVersionQbpBQr2pQVwlWl6cFf5mU1oMyuQFtdjmoK9e7n2cBkY"
+        "Ref": "DailyWordLambdaVersionuDIBJsZKuZrnzEJPX2dbinrxiv4WMPJ3Y6XUcruc8"
       },
       "Export": {
         "Name": "sls-mixy-dev-DailyWordLambdaFunctionQualifiedArn"
