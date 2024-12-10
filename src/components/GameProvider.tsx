@@ -19,6 +19,7 @@ interface GameContextType {
   winOrLose: string;
   setWinOrLose: Dispatch<SetStateAction<string>>;
   toastAlert: (message: string) => void;
+  dailyWordNumber: string;
 }
 
 interface GameProviderProps {
@@ -45,6 +46,11 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [winOrLose, setWinOrLose] = useState<string>(() => {
     const storedWinOrLose = localStorage.getItem('winOrLose');
     return storedWinOrLose || '';
+  });
+
+  const [dailyWordNumber, setDailyWordNumber] = useState<string>(() => {
+    const dailyWordNumber = localStorage.getItem('dailyWordNumber');
+    return dailyWordNumber || '';
   });
 
   const toastAlert = (message: string) =>
@@ -96,6 +102,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
         const data = await response.json();
         resetGameState(data.word);
+        setDailyWordNumber(data.totalWords);
+        localStorage.setItem('dailyWordNumber', data.totalWords);
         localStorage.setItem('dailyWordDate', todayFormatted);
       } catch (error) {
         console.error('Error fetching daily word:', error);
@@ -156,6 +164,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         guesses,
         gameStatus,
         winOrLose,
+        dailyWordNumber,
         handleGuess: guessHandler,
         setWinOrLose,
         toastAlert,
