@@ -1,16 +1,27 @@
 import { sendError, sendResponse } from '../../responses/index.js';
-import { GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
+import { GetCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 import { db } from '../../services/db.js';
-
-import words from 'an-array-of-english-words';
+import words from 'an-array-of-english-words' assert { type: 'json' };
 
 export const handler = async () => {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-  tomorrow.setHours(0, 0, 0, 0);
+  const todayFormatted = new Date(Date.now() + 3600000)
+    .toISOString()
+    .substring(0, 10);
 
-  const todayFormatted = today.toISOString().split('T')[0];
+  const scanParams = {
+    TableName: 'DailyWord',
+  };
+
+  let totalItems;
+
+  try {
+    const scanCommand = new ScanCommand(scanParams);
+    const result = await db.send(scanCommand);
+
+    totalItems = result.Items.length;
+  } catch (error) {
+    console.error('Error scanning table:', error);
+  }
 
   try {
     const getParams = {
@@ -22,7 +33,7 @@ export const handler = async () => {
     const result = await db.send(getCommand);
 
     if (result.Item) {
-      return sendResponse({ word: result.Item.word });
+      return sendResponse({ word: result.Item.word, totalWords: totalItems });
     }
   } catch (error) {
     console.error('Error checking for daily word in DynamoDB:', error);
@@ -49,5 +60,5 @@ export const handler = async () => {
     return sendError(500, 'Internal server error (Store word in db)');
   }
 
-  return sendResponse({ word: randomWord });
+  return sendResponse({ word: randomWord, totalItems: totalItems + 1 });
 };
