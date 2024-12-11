@@ -1,17 +1,23 @@
 nav {
-  height: 9vh;
+  /* height: 9vh; */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #374151;
+  padding: 1rem;
 }
 
 nav header {
   display: flex;
   align-items: center;
-  border-right: 2px solid white;
-  border-left: 2px solid white;
+  /* border-right: 2px solid white;
+  border-left: 2px solid white; */
   padding: 0 1rem;
   gap: 1rem;
+}
+
+nav a {
+  text-decoration: none;
 }
 
 a h1 {

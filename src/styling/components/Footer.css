@@ -2,8 +2,9 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #2d2d2d;
   font-size: 20px;
-  height: 6vh;
+  /* height: 6vh; */
   gap: 1rem;
+  padding: 1rem;
+  border-top: 1px solid #374151;
 }

@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <nav>
       <Link to={'/home'}>
-        <h1>Unscramblr</h1>
+        <h1 className="navbar-title">Unscramblr</h1>
       </Link>
       <header>
         {isLoggedIn ? (

@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <section className="game-container">
-      <p>Daily word #{dailyWordNumber}</p>
+      <p className="word-counter">Daily word #{dailyWordNumber}</p>
       <Word />
     </section>
   );
