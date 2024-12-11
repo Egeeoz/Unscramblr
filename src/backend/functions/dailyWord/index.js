@@ -60,5 +60,5 @@ export const handler = async () => {
     return sendError(500, 'Internal server error (Store word in db)');
   }
 
-  return sendResponse({ word: randomWord, totalItems: totalItems + 1 });
+  return sendResponse({ word: randomWord, totalWords: totalItems + 1 });
 };
