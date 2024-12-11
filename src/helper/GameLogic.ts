@@ -32,7 +32,9 @@ export const handleGuess = (
   }
   if (!value) return;
 
-  if (value.length != randomWord.length) {
+  const userGuess = value.trim();
+
+  if (userGuess.length != randomWord.length) {
     toastAlert(`Guess must be ${randomWord.length} letters long`);
     return;
   }
@@ -43,7 +45,7 @@ export const handleGuess = (
     return;
   }
 
-  const isCorrect = validateGuess(value, randomWord);
+  const isCorrect = validateGuess(userGuess, randomWord);
 
   if (isCorrect) {
     toastAlert('You guessed right! Congratulations!');
@@ -65,7 +67,7 @@ export const handleGuess = (
     localStorage.setItem('scrambledWord', randomWord);
   }
 
-  const updatedGuesses = [...guesses, value];
+  const updatedGuesses = [...guesses, userGuess];
   setGuesses(updatedGuesses);
   localStorage.setItem('guessedWords', JSON.stringify(updatedGuesses));
 };
