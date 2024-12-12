@@ -95,13 +95,3 @@
     font-size: 24px;
   }
 }
-
-@media (min-height: 883px) {
-  .game-container {
-    height: 58vh;
-  }
-
-  .guesses-list {
-    height: 30vh;
-  }
-}

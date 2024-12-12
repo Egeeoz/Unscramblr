@@ -79,8 +79,12 @@
   }
 }
 
-@media (min-height: 883px) {
+@media (max-width: 450px) and (min-height: 883px) {
   .main-container .game-container {
     height: 58vh;
+  }
+
+  .main-container .game-container .guesses-section .guesses-list {
+    height: 30vh;
   }
 }
