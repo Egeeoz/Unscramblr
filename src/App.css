@@ -64,8 +64,7 @@
   }
 
   .main-container .game-container {
-    /* min-height: 65vh;
-    max-height: 70vh; */
+    height: 67vh;
     width: 90%;
   }
 
@@ -77,5 +76,15 @@
   /* Footer page responsive */
   main footer {
     font-size: 4.5vw;
+  }
+}
+
+@media (max-width: 450px) and (min-height: 883px) {
+  .main-container .game-container {
+    height: 58vh;
+  }
+
+  .main-container .game-container .guesses-section .guesses-list {
+    height: 30vh;
   }
 }
