@@ -95,8 +95,9 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
     if (storedDate !== todayFormatted) {
       try {
+        // TODO: Update this URL when migrating to Firebase
         const response = await fetch(
-          'https://agwyz0r4jg.execute-api.eu-north-1.amazonaws.com/dailyword'
+          'https://dailyword-fcnkqhrw4a-uc.a.run.app'
         );
         if (!response.ok) throw new Error('Failed to fetch daily word');
 
