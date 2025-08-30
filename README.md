@@ -2,7 +2,7 @@
 
 Unscramblr is a simple word game where you solve a scrambled word of the day. You have 5 guesses to figure it out. Letters in the correct position turn **green**, and incorrect ones turn **red**. Can you solve the word before running out of guesses? 
 
-https://www.unscramblr.com/
+https://unscramblr.web.app
 ---
 
 ## How It Works
